@@ -17,8 +17,7 @@ function printFamousPeople(nametosearch) {
   if(err) {
     return console.error("Connection Error", err);
   }
-
-  });
+});
 
 
 return () => {
@@ -38,10 +37,8 @@ return () => {
       }
 
       client.end();
-  });
-}
-
-
+    });
+  }
 }
 
 
