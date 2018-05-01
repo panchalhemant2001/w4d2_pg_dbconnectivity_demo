@@ -1,3 +1,20 @@
+let daModule = require("./dataAccessModule");
+
+
+let name = process.argv[2];
+
+let printFP = daModule.printFamousPeople(name);
+
+printFP();
+
+
+
+
+
+
+/*
+//Program without refactoring withing this comment block
+
 const pg = require("pg");
 const settings = require("./settings");
 
@@ -26,7 +43,6 @@ client.connect((err) => {
     }
 
       console.log("Found " + result.rows.length + " person(s) by the name " + name);
-
       for(let i = 0; i < result.rows.length; i++) {
         console.log("- " + (i+1) + ": " + result.rows[i].first_name +
           " " + result.rows[i].last_name + ", born " +
@@ -36,3 +52,5 @@ client.connect((err) => {
       client.end();
   });
 });
+
+*/
