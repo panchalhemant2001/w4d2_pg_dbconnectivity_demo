@@ -2,25 +2,26 @@
 const pg = require("pg");
 const settings = require("./settings");
 
-function printFamousPeople(nametosearch) {
+function connectToTestDB(callback, options) {
+    const client = new pg.Client({
+      user: settings.user,
+      password: settings.password,
+      database: settings.database,
+      host: settings.hostname,
+      port: settings.port,
+      ssl: settings.ssl
+    });
 
-  const client = new pg.Client({
-    user: settings.user,
-    password: settings.password,
-    database: settings.database,
-    host: settings.hostname,
-    port: settings.port,
-    ssl: settings.ssl
+    client.connect((err) => {
+    if(err) {
+      return console.error("Connection Error", err);
+    }
+    callback(client, options);
   });
+}
 
-  client.connect((err) => {
-  if(err) {
-    return console.error("Connection Error", err);
-  }
-});
-
-
-return () => {
+function printPeople (client, options) {
+  let nametosearch = options;
   client.query("select * from famous_people where first_name=$1 or last_name=$1", [nametosearch], (err, result) => {
       console.log("Searching ...");
       if(err) {
@@ -39,13 +40,9 @@ return () => {
       client.end();
     });
   }
-}
-
-
-
 
 
 module.exports = {
-  printFamousPeople: printFamousPeople,
- // getFamousPeopleData: getFamousPeopleData
+  connectToTestDB: connectToTestDB,
+  printPeople: printPeople
 };
